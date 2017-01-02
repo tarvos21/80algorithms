@@ -18,7 +18,7 @@ Original URL: http://www.geeksforgeeks.org/top-10-algorithms-in-interview-questi
 ## Todo:
   - Translate to Chinese
   - Add necessary explanations for beginners
-  - Transform C/C++/Java code to Python
+  - Transform C/C++/Java code to Python(if no Python code)
 
 ## Goals:
   - Learn basic concepts and implementations of algorithms
