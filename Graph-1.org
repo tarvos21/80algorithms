@@ -1,0 +1,50 @@
+-*- mode: org -*-
+图-广度优先搜素
+
+广度优先搜索可以找到起点到目的顶点的最短路径。遍历一个图，和遍历一个树是类似的，但是图里面可能存在圆圈，所以遍历的时候，可能会回到先前已经经过的顶点。为了避免这种情况，用一个数组来储存已经访问过的顶点。简便起见，假设从起始顶点可以到达任何其他的顶点。
+比如下面的一个图，我们从顶点2开始，当我们到达顶点0时，我们寻找所有与它相邻的顶点，发现2与它相邻。如果我们不把访问过的顶点打上标记，那么我们会回到顶点2,这样会造成一个无限循环。广度优先搜索这个图，可以得到 2,0,3,1。
+
+图: Graph
+
+#+BEGIN_SRC python
+from collections import defaultdict
+
+class Graph:
+
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+    def addEdge(self, boy, girl):
+        self.graph[boy].append(girl)
+
+    def BFS(self, start):
+        visited = [False] * (len(self.graph))
+        queue = []
+        queue.append(start)
+        visited[start] = True
+
+        while queue:
+            start = queue.pop(0)
+            print(start, end=' ')
+
+            for i in self.graph[start]:
+                if visited[i] == False:
+                    queue.append(i)
+                    visited[i] = True
+
+
+g = Graph()
+g.addEdge(0, 1)
+g.addEdge(0, 2)
+g.addEdge(1, 2)
+g.addEdge(2, 0)
+g.addEdge(2, 3)
+g.addEdge(3, 3)
+
+
+print("广度优先搜索的结果是(从2开始)：")
+g.BFS(2)
+
+
+
+#+END_SRC
