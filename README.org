@@ -1,0 +1,49 @@
+* 面试常见算法80题 
+
+** 目录
+*** 图(Graph)
+  1. 广度优先搜索(BFS)
+  2. 深度优先搜索(DFS)
+  3. 固定起点最短路径(Dijkstra)
+  4. 任意两点间最短路径(Floyd)
+  5. 检测图中的环(Union Find)
+  6. 最小生成树 Prim 算法
+  7. 最小生成树 Kruskal 算法
+  8. 拓扑排序
+  9. Boggle拼字游戏(根据给定字母组合所有可能的单词)
+  10. 图中的桥(Bridge)
+*** 链表(Linked List)
+  1. 插入节点
+  2. 删除节点
+  3. 比较两个链表式字符串
+  4. 求两个链表式数字的和
+  5. 交替合并两个链表
+  6. 分组反转链表
+  7. 两个链表的交叉与连接
+  8. 检测并删除链表中的循环
+  9. 针对链表的归并排序
+  10. 从单向链表中选出随机节点
+*** 动态规划(Dynamic Programming)
+*** 排序与搜索(Sorting and Searching)
+*** 树(Tree)
+*** 数论(Number Theory)
+*** 位操作(Bit Manipulation)
+*** 字符串与数组(String and Array)
+
+
+
+
+原文连接: http://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/
+
+** 工作:
+  - 翻译介绍，适当补充内容
+  - 增加对代码的阐释解读
+  - 转换成 Python3 代码(如果没有)，并进行验证
+
+** 目的:
+  - 掌握基本的算法和数据结构
+  - 进一步熟悉 Python3
+  - 初步了解 C/C++/Java
+  - 熟悉 Spacemacs，以及 org-mode
+
+
