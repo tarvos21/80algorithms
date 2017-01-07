@@ -2,7 +2,7 @@
 
 ** 目录
 *** 图(Graph)
-  1. 广度优先搜索(BFS)
+  1. [[Graph-1.org][广度优先搜索(BFS)]]
   2. 深度优先搜索(DFS)
   3. 固定起点最短路径(Dijkstra)
   4. 任意两点间最短路径(Floyd)
@@ -29,21 +29,24 @@
 *** 数论(Number Theory)
 *** 位操作(Bit Manipulation)
 *** 字符串与数组(String and Array)
+\\
 
-
-
-
-原文连接: http://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/
+** 原目录链接: [[http://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/][Top 10 Algorithms in Interview Questions]]
+\\
 
 ** 工作:
-  - 翻译介绍，适当补充内容
-  - 增加对代码的阐释解读
+  - 翻译介绍，适当补充内容，整理思路
+  - 增加对代码的阐释解读，主要对新手
   - 转换成 Python3 代码(如果没有)，并进行验证
+\\
 
 ** 目的:
   - 掌握基本的算法和数据结构
   - 进一步熟悉 Python3
+  - 熟悉 Spacemacs，以及 org-mode 中的文档写作
   - 初步了解 C/C++/Java
-  - 熟悉 Spacemacs，以及 org-mode
+\\
 
-
+** 参考书目：
+- 《算法》(第4版)
+- 《数据结构与算法：Python 描述》
