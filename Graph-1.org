@@ -61,21 +61,21 @@ graph.BFS(2)    // H
 #+END_SRC
 
 * 解读
-  - A. collections 库里的 defaultdict 函数，创造一个字典，这里是以 list 为参数，构造的字典形如：
-#+BEGIN_SRC python
-{key1: [value1, value2], key2: [value3,value2,value5], key3: []}
-#+END_SRC
-详细说明可见： https://docs.python.org/3/library/collections.html#collections.defaultdict
-  - B. 类似于：
-#+BEGIN_SRC 
- {boy1: [girl1, girl2], boy2: [girl2], boy3: [girl1, girl3， girl2]}, 请勿多想哦～
-#+END_SRC
-经过步骤 G 添加连接的边之后:
-#+BEGIN_SRC 
-self.graph = {0: [1, 2], 1: [2], 2: [0, 3], 3: [3]}
-#+END_SRC
-意思是一个顶点可通向其他哪几个顶点，defaultdict(list) 完美实现了这个功能。
-  - C. 这是一个精妙的步骤，构造了一个以元素为索引，只包含真假的列表。经过步骤 G，self.graph 中有4个键值对，所以长度为4, 现在：
+- A. collections 库里的 defaultdict 函数，创造一个字典，这里是以 list 为参数，构造的字典形如：
+  #+BEGIN_SRC python
+  {key1: [value1, value2], key2: [value3,value2,value5], key3: []}
+  #+END_SRC
+  详细说明可见： [[https://docs.python.org/3/library/collections.html#collections.defaultdict][collections.defaultdict]
+- B. 类似于：
+  #+BEGIN_SRC 
+   {boy1: [girl1, girl2], boy2: [girl2], boy3: [girl1, girl3， girl2]}, 请勿多想哦～
+  #+END_SRC
+  经过步骤 G 添加连接的边之后:
+  #+BEGIN_SRC 
+  self.graph = {0: [1, 2], 1: [2], 2: [0, 3], 3: [3]}
+  #+END_SRC
+  意思是一个顶点可通向其他哪几个顶点，defaultdict(list) 完美实现了这个功能。
+- C. 这是一个精妙的步骤，构造了一个以元素为索引，只包含真假的列表。经过步骤 G，self.graph 中有4个键值对，所以长度为4, 现在：
 #+BEGIN_SRC 
 visited = [False, False, False, False]
 #+END_SRC
