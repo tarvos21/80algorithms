@@ -54,13 +54,13 @@ graph.BFS(2)    // H
 
 #+END_SRC
 
-** 输出
+* 输出
 #+BEGIN_SRC 
 广度优先搜索的结果是(从2开始)：
 2 | 0 | 3 | 1 | 
 #+END_SRC
 
-** 解读
+* 解读
   - A. collections 库里的 defaultdict 函数，创造一个字典，这里是以 list 为参数，构造的字典形如：
 #+BEGIN_SRC python
 {key1: [value1, value2], key2: [value3,value2,value5], key3: []}
