@@ -15,40 +15,121 @@
 #+BEGIN_SRC python
 from collections import defaultdict
 
+
 class Graph:
 
     def __init__(self):
-        self.graph = defaultdict(list)
+        self.graph = defaultdict(list)    # A
 
     def addEdge(self, boy, girl):
-        self.graph[boy].append(girl)
+        self.graph[boy].append(girl)    # B
 
     def BFS(self, start):
-        visited = [False] * (len(self.graph))
+        visited = [False] * (len(self.graph))    # C
         queue = []
         queue.append(start)
-        visited[start] = True
+        visited[start] = True    # D
 
         while queue:
             start = queue.pop(0)
-            print(start, end=' | ')
+            print(start, end=' | ')    # E
 
             for i in self.graph[start]:
                 if visited[i] == False:
                     queue.append(i)
-                    visited[i] = True
+                    visited[i] = True    # F
 
 
-g = Graph()
-g.addEdge(0, 1)
-g.addEdge(0, 2)
-g.addEdge(1, 2)
-g.addEdge(2, 0)
-g.addEdge(2, 3) g.addEdge(3, 3)
+graph = Graph()
+graph.addEdge(0, 1)    # G
+graph.addEdge(0, 2)
+graph.addEdge(1, 2)
+graph.addEdge(2, 0)
+graph.addEdge(2, 3)
+graph.addEdge(3, 3)
 
 
 print("广度优先搜索的结果是(从2开始)：")
-g.BFS(2)
+graph.BFS(2)    // H
 
 #+END_SRC
 
+** 输出
+#+BEGIN_SRC 
+广度优先搜索的结果是(从2开始)：
+2 | 0 | 3 | 1 | 
+#+END_SRC
+
+** 解读
+  - A. collections 库里的 defaultdict 函数，创造一个字典，这里是以 list 为参数，构造的字典形如：
+#+BEGIN_SRC python
+{key1: [value1, value2], key2: [value3,value2,value5], key3: []}
+#+END_SRC
+详细说明可见： https://docs.python.org/3/library/collections.html#collections.defaultdict
+  - B. 类似于：
+#+BEGIN_SRC 
+ {boy1: [girl1, girl2], boy2: [girl2], boy3: [girl1, girl3， girl2]}, 请勿多想哦～
+#+END_SRC
+经过步骤 G 添加连接的边之后:
+#+BEGIN_SRC 
+self.graph = {0: [1, 2], 1: [2], 2: [0, 3], 3: [3]}
+#+END_SRC
+意思是一个顶点可通向其他哪几个顶点，defaultdict(list) 完美实现了这个功能。
+  - C. 这是一个精妙的步骤，构造了一个以元素为索引，只包含真假的列表。经过步骤 G，self.graph 中有4个键值对，所以长度为4, 现在：
+#+BEGIN_SRC 
+visited = [False, False, False, False]
+#+END_SRC
+  - D. 把 visited 开始顶点位置的 boolean 值转换成 True, 步骤 H 中传入的起点是2。queue中也加入起始顶点，现在：
+#+BEGIN_SRC 
+visited = [False, False, True, False]
+queue = [2]
+#+END_SRC
+  - E. 打印 queue 中的第一个元素，pop 会将这个元素从 queue 中取出，不保留原值。Pyhton3 的 print 变成了函数，可以自定义 end 参数，表示打印字符串后需要输出的内容。现在：
+#+BEGIN_SRC 
+queue = []
+start = 2
+打印输出： 2 | 
+#+END_SRC
+  - F. 这个 for 循环是整段代码的核心。下面一步步说明：
+    - 最开始 start 是 2, 查询上面步骤 B 中生成的字典，得到 self.graph[2] = [0, 3]， i = [0, 3]
+      - 第一次循环， visited[0] 是否等于 False 呢？查看步骤 D 中得到的列表，确实等于 False，进入循环，queue 添加 0, visited[0] 重新赋值，造成以下结果：
+#+BEGIN_SRC 
+queue = [0]
+visited = [True, False, True, False]
+#+END_SRC
+      - 第二次循环，visited[3] 确实还是 False, 于是：
+#+BEGIN_SRC 
+queue = [0, 3]
+visited = [True, False, True, True]
+#+END_SRC
+
+    - for 循环结束之后，返回到 while 循环，发现 queue = [0, 3], 非空，于是进入 while 循环，取出 queue[0]，正好也是0,并打印，现在：
+#+BEGIN_SRC 
+queue = [3]
+start = 0
+打印输出： 2 | 0 | 
+#+END_SRC
+      - 再次来到 for 循环，这次 self.graph[0] = [1, 2], 第一次发现 visited[1] == False，于是 queue 添加1, visited[1] 赋值为 True, 现在：
+#+BEGIN_SRC 
+queue = [3, 1]
+visited = [True, True, True, True]
+#+END_SRC
+      - 有趣的地方来了。第二次循环，visited[2] 这时候已经是 True，所以不会进入 for 循环，直接跳到 while 循环的开始
+
+    - 这时候 queue  = [3, 1], 非空，于是进行 pop 和 print 操作，之后：
+#+BEGIN_SRC 
+queue = [1]
+start = 3
+打印输出： 2 | 0 | 3 | 
+#+END_SRC
+      - 此时 self.graph[3] = [3], 但是 visited[3] = True, 所以不会再进入 for 循环，直接跳到 while 循环的开始
+
+    - 此时 queue = [1] 非空，同样进行 pop 和 print 操作，之后：
+#+BEGIN_SRC 
+queue = []
+start = 1
+打印输出： 2 | 0 | 3 | 1 | 
+#+END_SRC
+      - 这时 self.graph[1] = 2, 但是 visited[2] = True, 所以同样不会进入 for 循环，直接跳到 while 循环的开始
+
+    - 另一个有趣的地方。这时候 queue = [], 是空的，在 Python 中空的列表是 False，所以不会进入循环，程序就此结束。
