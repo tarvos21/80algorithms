@@ -32,6 +32,7 @@
 \\
 
 ** 原目录链接: [[http://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/][Top 10 Algorithms in Interview Questions]]
+** 项目进度：[[https://github.com/tarvos21/80algorithms/projects/1]["面试常见算法80题"看板]]
 \\
 
 ** 工作:

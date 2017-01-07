@@ -1,11 +1,11 @@
-#+TITLE: 面试常见算法80题|{图: 广度优先搜索}
+#+TITLE: {面试常见算法80题: {图: [广度优先搜索]}}
 #+AUTHOR: https://github.com/tarvos21
 
 * 介绍
 
 原文链接：[[http://www.geeksforgeeks.org/breadth-first-traversal-for-a-graph/][Breadth First Traversal for a Graph]]
 
-广度优先搜索可以找到起点到目的顶点的最短路径。遍历一个图，和遍历一个树是类似的，但是图里面可能存在环，所以遍历的时候，可能会回到先前已经经过的顶点。为了避免这种情况，用一个数组来储存已经访问过的顶点。
+广度优先搜索可以找到起点到目的顶点的最短路径。遍历一个图，和遍历一个树是类似的，但是图里面可能存在环，所以遍历的时候，可能会回到先前已经经过的顶点。为了避免这种情况，用一个数组来储存顶点的状态。
 
 比如下面的一个图，我们从顶点 ~2~ 开始，当我们到达顶点 ~0~ 时，我们寻找所有与它相邻的顶点，发现 ~2~ 也与它相邻。如果我们不把访问过的顶点打上标记，那么我们会回到顶点 ~2~ ,这样会造成一个无限循环。
 
@@ -17,7 +17,7 @@
 \\
 
 * 思路
-  1. 构造 Graph 类，添加可以达到的两个顶点
+  1. 构造 Graph 类，添加可以连通的两个顶点(即有方向的边)
   2. 构造一个包含 ~False~ , ~True~ 的列表，用来记录顶点是否被访问过
   3. 构造一个队列式的列表，每次从中取出一个元素作为当下的起点，并从列表中删除该顶点
   4. 起点被访问后，寻找它能够到达的其他顶点
@@ -78,7 +78,7 @@ graph.BFS(2)    # H
 * 解读
 - *A*. ~collections~ 库里的 /defaultdict/ 函数，这里是以 ~list~ 为参数，它构造的字典形如：
 
-  ~{key1: [value1, value2], key2: [value3,value2,value5], key3: []}~
+  ~{key1: [value1, value2], key2: [value3, value2, value5], key3: []}~
  
   详细说明可见： [[https://docs.python.org/3/library/collections.html#collections.defaultdict][collections.defaultdict]]
 
@@ -160,7 +160,7 @@ graph.BFS(2)    # H
 
     - 这时 ~self.graph[1] = 2~ , 但是 ~visited[2] = True~, 所以同样不会进入 ~for~ 循环，直接跳到 ~while~ 循环的开始
 
-  - 另一个有趣的地方。这时候 ~queue = []~ , 是空的，在 Python 中空的列表是 ~False~ ，所以不会进入循环，程序就此结束。
+  - 另一个有趣的地方。这时候 ~queue = []~ , 是空的，在 Python 中空的列表是 ~False~ ，所以不会进入 ~while~ 循环，程序就此结束。
 
 - *G*. 初始化， ~graph~ 变成 ~Graph~ 类的一个实例
 
