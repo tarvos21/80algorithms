@@ -1,16 +1,29 @@
-#+TITLE: 面试常见算法80题:图-广度优先搜素
+#+TITLE: 面试常见算法80题|{图: 广度优先搜索}
 #+AUTHOR: https://github.com/tarvos21
 
 * 介绍
 
-广度优先搜索可以找到起点到目的顶点的最短路径。遍历一个图，和遍历一个树是类似的，但是图里面可能存在环，所以遍历的时候，可能会回到先前已经经过的顶点。为了避免这种情况，用一个数组来储存已经访问过的顶点。简便起见，假设从起始顶点可以到达任何其他的顶点。
+原文链接：[[http://www.geeksforgeeks.org/breadth-first-traversal-for-a-graph/][Breadth First Traversal for a Graph]]
 
-比如下面的一个图，我们从顶点2开始，当我们到达顶点0时，我们寻找所有与它相邻的顶点，发现2与它相邻。如果我们不把访问过的顶点打上标记，那么我们会回到顶点2,这样会造成一个无限循环。广度优先搜索这个图，可以得到 2,0,3,1。
+广度优先搜索可以找到起点到目的顶点的最短路径。遍历一个图，和遍历一个树是类似的，但是图里面可能存在环，所以遍历的时候，可能会回到先前已经经过的顶点。为了避免这种情况，用一个数组来储存已经访问过的顶点。
+
+比如下面的一个图，我们从顶点 ~2~ 开始，当我们到达顶点 ~0~ 时，我们寻找所有与它相邻的顶点，发现 ~2~ 也与它相邻。如果我们不把访问过的顶点打上标记，那么我们会回到顶点 ~2~ ,这样会造成一个无限循环。
+
+简便起见，假设从起始顶点可以到达任何其他的顶点。利用广度优先搜索来遍历这个图，可以得到 ~2, 0, 3, 1~ 。
 
 #+CAPTION: Graph-BFS
 #+NAME: image:graph-bfs
 [[./image/graph-1.jpg]]
+\\
 
+* 思路
+  1. 构造 Graph 类，添加可以达到的两个顶点
+  2. 构造一个包含 ~False~ , ~True~ 的列表，用来记录顶点是否被访问过
+  3. 构造一个队列式的列表，每次从中取出一个元素作为当下的起点，并从列表中删除该顶点
+  4. 起点被访问后，寻找它能够到达的其他顶点
+  5. 如果其他顶点没有被访问过，则修改它的状态，表示已访问
+  6. 当队列中没有元素时，说明所有顶点都已经访问过
+\\
 
 * 代码 
 #+BEGIN_SRC python
@@ -51,18 +64,19 @@ graph.addEdge(3, 3)
 
 
 print("广度优先搜索的结果是(从2开始)：")
-graph.BFS(2)    // H
+graph.BFS(2)    # H
 #+END_SRC
+\\
 
 * 输出
 #+BEGIN_SRC 
 广度优先搜索的结果是(从2开始)：
 2 | 0 | 3 | 1 | 
 #+END_SRC
-
+\\
 
 * 解读
-- *A*. ~collections~ 库里的 /defaultdict/ 函数，创造一个字典，这里是以 ~list~ 为参数，构造的字典形如：
+- *A*. ~collections~ 库里的 /defaultdict/ 函数，这里是以 ~list~ 为参数，它构造的字典形如：
 
   ~{key1: [value1, value2], key2: [value3,value2,value5], key3: []}~
  
@@ -85,53 +99,75 @@ graph.BFS(2)    // H
 - *D*. 把 ~visited~ 列表中开始顶点位置的 /boolean/ 值转换成 ~True~, 步骤 *H* 中传入的起点是 ~2~ 。 ~queue~ 中也加入起始顶点，现在：
 
   ~visited = [False, False, True, False]~
+
   ~queue = [2]~
 
 - *E*. 打印 ~queue~ 中的第一个元素， /pop/ 会将这个元素从 ~queue~ 中取出，不保留原值。Pyhton3 的 /print/ 变成了函数，可以自定义 ~end~ 参数，表示打印字符串后需要输出的内容。现在：
  
   ~queue = []~
+
   ~start = 2~
-  ~打印输出： 2 | ~
+
+  ~打印输出： 2 |~
 
 - *F*. 这个 ~for~ 循环是整段代码的核心。下面一步步说明：
   - 最开始 ~start~ 是 ~2~, 查询上面步骤 *B* 中生成的字典，得到 ~self.graph[2] = [0, 3]， i = [0, 3]~
     - 第一次循环， ~visited[0]~ 是否等于 ~False~ 呢？查看步骤 *D* 中得到的列表，确实等于 ~False~ ，进入循环， ~queue~ 添加 ~0~ , ~visited[0]~ 重新赋值，造成以下结果：
  
       ~queue = [0]~
+
       ~visited = [True, False, True, False]~
 
     - 第二次循环， ~visited[3]~ 确实还是 ~False~, 于是：
  
       ~queue = [0, 3]~
+
       ~visited = [True, False, True, True]~
 
-    - for 循环结束之后，返回到 while 循环，发现 queue = [0, 3], 非空，于是进入 while 循环，取出 queue[0]，正好也是0,并打印，现在：
-#+BEGIN_SRC 
-queue = [3]
-start = 0
-打印输出： 2 | 0 | 
-#+END_SRC
-      - 再次来到 for 循环，这次 self.graph[0] = [1, 2], 第一次发现 visited[1] == False，于是 queue 添加1, visited[1] 赋值为 True, 现在：
-#+BEGIN_SRC 
-queue = [3, 1]
-visited = [True, True, True, True]
-#+END_SRC
-      - 有趣的地方来了。第二次循环，visited[2] 这时候已经是 True，所以不会进入 for 循环，直接跳到 while 循环的开始
+  - ~for~ 循环结束之后，返回到 ~while~ 循环，发现 ~queue = [0, 3]~ , 非空，于是进入 ~while~ 循环，取出 ~queue[0]~ ，正好也是 ~0~ ,并打印，现在：
+ 
+    ~queue = [3]~
 
-    - 这时候 queue  = [3, 1], 非空，于是进行 pop 和 print 操作，之后：
-#+BEGIN_SRC 
-queue = [1]
-start = 3
-打印输出： 2 | 0 | 3 | 
-#+END_SRC
-      - 此时 self.graph[3] = [3], 但是 visited[3] = True, 所以不会再进入 for 循环，直接跳到 while 循环的开始
+    ~start = 0~
 
-    - 此时 queue = [1] 非空，同样进行 pop 和 print 操作，之后：
-#+BEGIN_SRC 
-queue = []
-start = 1
-打印输出： 2 | 0 | 3 | 1 | 
-#+END_SRC
-      - 这时 self.graph[1] = 2, 但是 visited[2] = True, 所以同样不会进入 for 循环，直接跳到 while 循环的开始
+    ~打印输出： 2 | 0 |~
 
-    - 另一个有趣的地方。这时候 queue = [], 是空的，在 Python 中空的列表是 False，所以不会进入循环，程序就此结束。
+  - 再次来到 ~for~ 循环，这次 ~self.graph[0] = [1, 2]~ , 发现 ~visited[1] == False~ ，于是 ~queue~ 添加 ~1~, ~visited[1]~ 赋值为 ~True~ , 现在：
+ 
+    ~queue = [3, 1]~
+
+    ~visited = [True, True, True, True]~
+
+    - 有趣的地方来了。第二次循环， ~visited[2]~ 这时候已经是 ~True~ ，所以不会进入 ~for~ 循环，直接跳到 ~while~ 循环的开始
+
+  - 这时候 ~queue = [3, 1]~ , 非空，于是进行 /pop/ 和 /print/ 操作，之后：
+ 
+    ~queue = [1]~
+
+    ~start = 3~
+
+    ~打印输出： 2 | 0 | 3 |~
+
+    - 此时 ~self.graph[3] = [3]~, 但是 ~visited[3] = True~, 所以不会再进入 ~for~ 循环，直接跳到 ~while~ 循环的开始
+
+  - 此时 ~queue = [1]~ 非空，同样进行 /pop/ 和 /print/ 操作，之后：
+
+    ~queue = []~
+
+    ~start = 1~
+
+    ~打印输出： 2 | 0 | 3 | 1 |~
+
+    - 这时 ~self.graph[1] = 2~ , 但是 ~visited[2] = True~, 所以同样不会进入 ~for~ 循环，直接跳到 ~while~ 循环的开始
+
+  - 另一个有趣的地方。这时候 ~queue = []~ , 是空的，在 Python 中空的列表是 ~False~ ，所以不会进入循环，程序就此结束。
+
+- *G*. 初始化， ~graph~ 变成 ~Graph~ 类的一个实例
+
+- *H*. 将起点 ~2~ 作为参数传递给 ~Graph~ 类中的 /BFS/ 函数
+\\
+
+* 总结
+需注意，这里的情况是给定一个顶点，它可以到达其他任何顶点，但在非连通图中有些顶点可能无法达到。这时候若要遍历图中的所有顶点，可以让广度优先搜索从所有的顶点开始。
+
+该算法的时间复杂度是 *O(V+E)*, V 是所有的顶点数，E 是所有的边数。
