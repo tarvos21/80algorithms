@@ -112,7 +112,7 @@ graph.BFS(2)    # H
 
 - *F*. 这个 ~for~ 循环是整段代码的核心。下面一步步说明：
   - 最开始 ~start~ 是 ~2~, 查询上面步骤 *B* 中生成的字典，得到 ~self.graph[2] = [0, 3]， i = [0, 3]~
-    - 第一次循环， ~visited[0]~ 是否等于 ~False~ 呢？查看步骤 *D* 中得到的列表，确实等于 ~False~ ，进入循环， ~queue~ 添加 ~0~ , ~visited[0]~ 重新赋值，造成以下结果：
+    - 第一次循环， ~visited[0]~ 是否是 ~False~ 呢？查看步骤 *D* 中得到的列表，确实是 ~False~ ，进入循环， ~queue~ 添加 ~0~ , ~visited[0]~ 重新赋值，造成以下结果：
  
       ~queue = [0]~
 
@@ -132,7 +132,7 @@ graph.BFS(2)    # H
 
     ~打印输出： 2 | 0 |~
 
-  - 再次来到 ~for~ 循环，这次 ~self.graph[0] = [1, 2]~ , 发现 ~visited[1] == False~ ，于是 ~queue~ 添加 ~1~, ~visited[1]~ 赋值为 ~True~ , 现在：
+  - 再次来到 ~for~ 循环，这次 ~self.graph[0] = [1, 2]~ , 发现 ~visited[1] = False~ ，于是 ~queue~ 添加 ~1~, ~visited[1]~ 赋值为 ~True~ , 现在：
  
     ~queue = [3, 1]~
 
