@@ -63,8 +63,7 @@ graph.BFS(2)    // H
 * 解读
 - A. collections 库里的 defaultdict 函数，创造一个字典，这里是以 list 为参数，构造的字典形如：
   #+BEGIN_SRC python
-  {key1: [value1, value2], key2: [value3,value2,value5], key3: []}
-  #+END_SRC
+{key1: [value1, value2], key2: [value3,value2,value5], key3: []}#+END_SRC
   详细说明可见： [[https://docs.python.org/3/library/collections.html#collections.defaultdict][collections.defaultdict]
 - B. 类似于：
   #+BEGIN_SRC 
