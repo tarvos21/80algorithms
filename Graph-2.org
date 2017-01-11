@@ -1,0 +1,22 @@
+#+TITLE: {面试常见算法80题: {图: [深度优先搜索]}}
+#+AUTHOR: https://github.com/tarvos21
+
+* 介绍
+
+原文链接：[[http://www.geeksforgeeks.org/depth-first-traversal-for-a-graph/][Depth First Traversal for a Graph]]
+
+对图进行深度优先搜索(或遍历), 跟树的深度优先搜索类似，唯一的区别，就是在图中可能存在环，所以可能重复访问同一个节点。
+
+比如下面左边的图，我们从顶点 ~2~ 开始，当我们到达顶点 ~0~ 时，我们寻找所有与它相邻的顶点，发现 ~2~ 也与它相邻。如果我们不把访问过的顶点打上标记，那么我们会回到顶点 ~2~ ,这样会造成一个无限循环。
+
+利用深度优先搜索来遍历这个图，可以得到 ~2, 0, 1, 3~ 。
+
+#+CAPTION: Graph-DFS
+#+NAME: image:graph-dfs
+[[./image/graph-2.jpg]]
+\\
+
+
+* 思路
+  1. 构造 Graph 类，添加可以连通的两个顶点(即有方向的边)
+\\
